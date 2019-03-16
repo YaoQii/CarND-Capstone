@@ -60,9 +60,9 @@ class DBWNode(object):
                                      decel_limit=decel_limit,
                                      accel_limit=accel_limit,
                                      wheel_radius=wheel_radius,
-                                     wheel_bas =wheel_base,
+                                     wheel_base =wheel_base,
                                      steer_ratio=steer_ratio,
-                                     max_lat_accel=max_lat_accel,
+                                     max_lax_accel=max_lat_accel,
                                      max_steer_angle=max_steer_angle)
 
         # TODO: Subscribe to all the topics you need to
@@ -90,7 +90,7 @@ class DBWNode(object):
                                                                                    self.linear_vel,
                                                                                    self.angular_vel)
             if self.dbw_enabled:
-                self.publish(self.throttle, self.brake, self.steer)
+                self.publish(self.throttle, self.brake, self.steering)
             rate.sleep()
 
     def dbw_enabled_cb(self, msg):
