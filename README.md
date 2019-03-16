@@ -1,5 +1,32 @@
-This is the project repo for the final project of the Udacity Self-Driving Car Nanodegree: Programming a Real Self-Driving Car. For more information about the project, see the project introduction [here](https://classroom.udacity.com/nanodegrees/nd013/parts/6047fe34-d93c-4f50-8336-b70ef10cb4b2/modules/e1a23b06-329a-4684-a717-ad476f0d8dff/lessons/462c933d-9f24-42d3-8bdc-a08a5fc866e4/concepts/5ab4b122-83e6-436d-850f-9f4d26627fd9).
+## CarND-Capstone
+This is the project repo for the final project of the Udacity Self-Driving Car Nanodegree: Programming a Real Self-Driving Car. For more information about the project, see the project introduction [here](https://classroom.udacity.com/nanodegrees/nd013/parts/6047fe34-d93c-4f50-8336-b70ef10cb4b2/modules/e1a23b06-329a-4684-a717-ad476f0d8dff/lessons/462c933d-9f24-42d3-8bdc-a08a5fc866e4/concepts/5ab4b122-83e6-436d-850f-9f4d26627fd9). It's a cool project to understand the base principle of self-driving car!
 
+## Description of project
+This project is for Carla(udaicty's self-driving car). The software architecture is as follow:
+![alt-text][software_arch]
+And I update the following nodes by myself:
+1. Waypoint updater node
+Which is used to provide the waypoint and acceleration to the self-driving car, just as local path planning. Also, I make the speed decision in this node, the speed is decided by the traffic light detection results. The waypoint updater node suscribe the stop position in the map from traffic lights node, And the default is `-1`.
+![alt-text][waypoint_update_node]
+2. DBW node and Twist Controller
+Drive-By-Wire Node is the link which connect the controller and self-driving car. I use the Yaw controller to control the lateral, and the PID to longitudinal by the speed error and sample time.
+![alt-text][dbw_node]
+3. Traffic Light Detection
+I divide this task into two parts. Fisrt, detect the traffic light with the image_color. And then, calculate the stop line idx when the traffic light is in RED.
+And detect the traffic light inspired by Tensorflow's [Object Detection API](https://github.com/tensorflow/models/tree/master/research/object_detection), and also thanks to [this](https://github.com/coldKnight/TrafficLight_Detection-TensorFlowAPI)) !
+ID of traffic light color (specified in styx_msgs/TrafficLight):
+
+State | Traffic light color
+---- | -------------------------
+1 | TrafficLight.RED.
+2 | TrafficLight.YELLOW.
+3 | TrafficLight.GREEN.
+4 | TrafficLight.UNKNOWN.
+
+![alt-text][traffic_detect_node]
+
+## Install and run the project
+The follow is the udacity's description. And I install by `Native Installation`.
 Please use **one** of the two installation options, either native **or** docker installation.
 
 ### Native Installation
@@ -72,3 +99,11 @@ cd CarND-Capstone/ros
 roslaunch launch/site.launch
 ```
 5. Confirm that traffic light detection works on real life images
+
+
+
+[//]: # (Image References)
+[software_arch]: ./imgs/software.png
+[dbw_node]: ./imgs/dbw_node.png
+[traffic_detect_node]: ./imgs/traffic_detect_node.png
+[waypoint_update_node]: ./imgs/waypoint_update_node.png
