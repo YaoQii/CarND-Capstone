@@ -62,7 +62,7 @@ class WaypointUpdater(object):
         x = self.pose.pose.position.x
         y = self.pose.pose.position.y
         closest_idx = self.waypoint_tree.query([x, y], 1)[1]
-        rospy.loginfo("Nearest sefl position idx:{}".format(closest_idx))
+        # rospy.loginfo("Nearest sefl position idx:{}".format(closest_idx))
         #check is cloest is ahead or behind vehicle
         closest_coord = self.waypoints_2d[closest_idx]
         prev_coord = self.waypoints_2d[closest_idx - 1]
@@ -76,7 +76,7 @@ class WaypointUpdater(object):
 
         if val > 0:
             closest_idx = (closest_idx + 1) % len(self.waypoints_2d)
-        rospy.loginfo("Nearest self idx in hyperplane:{}".format(closest_idx))
+        # rospy.loginfo("Nearest self idx in hyperplane:{}".format(closest_idx))
         return closest_idx
 
     def publish_waypoints(self):
@@ -127,7 +127,7 @@ class WaypointUpdater(object):
     def traffic_cb(self, msg):
         # TODO: Callback for /traffic_waypoint message. Implement
         self.stopline_wp_idx = msg.data
-        rospy.logerr("Nearest self idx in hyperplane:{}".format(self.stopline_wp_idx))
+        #rospy.logerr("Nearest self idx in hyperplane:{}".format(self.stopline_wp_idx))
     def obstacle_cb(self, msg):
         # TODO: Callback for /obstacle_waypoint message. We will implement it later
         pass

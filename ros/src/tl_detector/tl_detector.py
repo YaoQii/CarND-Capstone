@@ -93,9 +93,6 @@ class TLDetector(object):
             self.last_state = self.state
             light_wp = light_wp if state == TrafficLight.RED else -1
             self.last_wp = light_wp
-            rospy.loginfo("publish Light idx:{}".format(light_wp))
-            rospy.loginfo("publish Light state:{}".format(state))
-            rospy.loginfo("Red Light state:{}".format(TrafficLight.RED))
             self.upcoming_red_light_pub.publish(Int32(light_wp))
         else:
             self.upcoming_red_light_pub.publish(Int32(self.last_wp))
@@ -127,7 +124,7 @@ class TLDetector(object):
 
         """
         if(not self.has_image):
-            rospy.loginfo("No image in get_light_state")
+            rospy.logerr("No image in get_light_state")
             self.prev_light_loc = None
             return False
 
@@ -167,9 +164,9 @@ class TLDetector(object):
                     closest_light = light
                     line_wp_idx = temp_wp_idx
         if closest_light:
-            rospy.loginfo("Nearest Light idx:{}".format(line_wp_idx))
+            # rospy.loginfo("Nearest Light idx:{}".format(line_wp_idx))
             state = self.get_light_state(closest_light)
-            rospy.logdebug("traffic light state: %d", state)
+            # rospy.logdebug("traffic light state: %d", state)
             return line_wp_idx, state
 
         return -1, TrafficLight.UNKNOWN
