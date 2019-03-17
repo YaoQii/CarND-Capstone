@@ -9,6 +9,7 @@ from cv_bridge import CvBridge
 from light_classification.tl_classifier import TLClassifier
 import tf
 from scipy.spatial import KDTree
+from timeit import default_timer as timer
 import numpy as np
 import cv2
 import yaml
@@ -25,6 +26,7 @@ class TLDetector(object):
         self.waypoint_tree = None
         self.camera_image = None
         self.lights = []
+        self.light_classifier_time = 0.0  #to record the time in classifier the traffic light
 
         sub1 = rospy.Subscriber('/current_pose', PoseStamped, self.pose_cb)
         sub2 = rospy.Subscriber('/base_waypoints', Lane, self.waypoints_cb)
@@ -76,10 +78,18 @@ class TLDetector(object):
             msg (Image): image from car-mounted camera
 
         """
+        # rospy.loginfo("origin time: {}".format(self.light_classifier_time))
+        if self.light_classifier_time > 0.0:  #to ensure to be at least 10HZ
+            self.light_classifier_time -= 0.1;
+            # rospy.loginfo("Not detect: {}".format(self.light_classifier_time))
+            return
+        start_time = timer();
         self.has_image = True
         self.camera_image = msg
         light_wp, state = self.process_traffic_lights()
+        self.light_classifier_time = timer() - start_time
 
+        rospy.loginfo("Detection time: {}".format(self.light_classifier_time))
         '''
         Publish upcoming red lights at camera frequency.
         Each predicted state has to occur `STATE_COUNT_THRESHOLD` number

@@ -11,15 +11,20 @@ Yao Qi  | qy_upup@sina.com
 This project is for Carla(udaicty's self-driving car). The software architecture is as follow:
 ![alt-text][software_arch]
 And I update the following nodes by myself:
-1. Waypoint updater node
+1. Waypoint updater node.
+
 Which is used to provide the waypoint and acceleration to the self-driving car, just as local path planning. Also, I make the speed decision in this node, the speed is decided by the traffic light detection results. The waypoint updater node suscribe the stop position in the map from traffic lights node, And the default is `-1`.
 ![alt-text][waypoint_update_node]
-2. DBW node and Twist Controller
+
+2. DBW node and Twist Controller.
+
 Drive-By-Wire Node is the link which connect the controller and self-driving car. I use the Yaw controller to control the lateral, and the PID to longitudinal by the speed error and sample time.
 ![alt-text][dbw_node]
-3. Traffic Light Detection
+
+3. Traffic Light Detection.
+
 I divide this task into two parts. Fisrt, detect the traffic light with the image_color. And then, calculate the stop line idx when the traffic light is in RED.
-And detect the traffic light inspired by Tensorflow's [Object Detection API](https://github.com/tensorflow/models/tree/master/research/object_detection), and also thanks to [this](https://github.com/coldKnight/TrafficLight_Detection-TensorFlowAPI)) !
+And detect the traffic light inspired by Tensorflow's [Object Detection API](https://github.com/tensorflow/models/tree/master/research/object_detection), and also thanks to [this](https://github.com/coldKnight/TrafficLight_Detection-TensorFlowAPI)) ! And to ensure the frequency and not block the channel, I check the time in the 'def image_cb(self, msg):'
 ID of traffic light color (specified in styx_msgs/TrafficLight):
 
 State | Traffic light color
