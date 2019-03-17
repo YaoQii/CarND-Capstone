@@ -24,7 +24,8 @@ Drive-By-Wire Node is the link which connect the controller and self-driving car
 3. Traffic Light Detection.
 
 I divide this task into two parts. Fisrt, detect the traffic light with the image_color. And then, calculate the stop line idx when the traffic light is in RED.
-And detect the traffic light inspired by Tensorflow's [Object Detection API](https://github.com/tensorflow/models/tree/master/research/object_detection), and also thanks to [this](https://github.com/coldKnight/TrafficLight_Detection-TensorFlowAPI)) ! And to ensure the frequency and not block the channel, I check the time in the 'def image_cb(self, msg):'
+And detect the traffic light inspired by Tensorflow's [Object Detection API](https://github.com/tensorflow/models/tree/master/research/object_detection), and also thanks to [this](https://github.com/coldKnight/TrafficLight_Detection-TensorFlowAPI)) ! And to ensure the frequency and not block the channel, I check the time in the `def image_cb(self, msg)`
+
 ID of traffic light color (specified in styx_msgs/TrafficLight):
 
 State | Traffic light color
